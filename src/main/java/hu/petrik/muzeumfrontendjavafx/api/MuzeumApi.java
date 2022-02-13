@@ -57,15 +57,7 @@ public class MuzeumApi {
     }
 
     public static boolean szoborTorlese(int id) throws IOException {
-        Response response = RequestHandler.delete(SZOBOR_API_URL+"/"+id);
-
-        Gson GaysonDel = new Gson();
-        String json = response.getContent();
-        if (response.getResponseCode() >= 400) {
-            String message = GaysonDel.fromJson(json, ApiError.class).getMessage();
-            throw new IOException(message);
-        }
-        return response.getResponseCode() == 204;
+        return torlesBody(id, SZOBOR_API_URL);
     }
 
     public static List<Festmeny> getFestmenyek() throws IOException {
@@ -111,7 +103,13 @@ public class MuzeumApi {
     }
 
     public static boolean festmenyTorlese(int id) throws IOException {
-        Response response = RequestHandler.delete(FESTMENY_API_URL+"/"+id);
+        return torlesBody(id, FESTMENY_API_URL);
+    }
+
+
+
+    private static boolean torlesBody(int id, String szoborApiUrl) throws IOException {
+        Response response = RequestHandler.delete(szoborApiUrl +"/"+id);
 
         Gson GaysonDel = new Gson();
         String json = response.getContent();
