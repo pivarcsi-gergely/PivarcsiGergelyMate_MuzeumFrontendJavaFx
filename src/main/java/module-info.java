@@ -1,9 +1,8 @@
 module hu.petrik.muzeumfrontendjavafx {
     requires javafx.controls;
     requires javafx.fxml;
+    requires com.google.gson;
 
-    requires org.kordamp.bootstrapfx.core;
-
-    opens hu.petrik.muzeumfrontendjavafx to javafx.fxml;
+    opens hu.petrik.muzeumfrontendjavafx to javafx.fxml, com.google.gson;
     exports hu.petrik.muzeumfrontendjavafx;
 }
