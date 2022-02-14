@@ -39,7 +39,7 @@ public class MuzeumController extends Controller {
 
         colFestmenyCim.setCellValueFactory(new PropertyValueFactory<>("title"));
         colfestmenyEv.setCellValueFactory(new PropertyValueFactory<>("year"));
-        colFestmenyKiallitott.setCellValueFactory(new PropertyValueFactory<>("title"));
+        colFestmenyKiallitott.setCellValueFactory(new PropertyValueFactory<>("on_display"));
         festmenyFeltolt();
     }
 
