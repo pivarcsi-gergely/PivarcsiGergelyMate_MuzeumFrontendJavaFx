@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.petrik.muzeumfrontendjavafx.MuzeumController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.petrik.muzeumfrontendjavafx.controllers.MuzeumController">
     <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <Tab text="Szobrok">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -35,7 +35,7 @@
                     <columns>
                         <TableColumn fx:id="colFestmenyCim" prefWidth="300.0" text="Cím" />
                         <TableColumn fx:id="colfestmenyEv" prefWidth="100.0" text="Kiadási év" />
-                        <TableColumn fx:id="colFestmnyKiallitott" prefWidth="150.0" text="Kivan-e állítva" />
+                        <TableColumn fx:id="colFestmenyKiallitott" prefWidth="150.0" text="Kivan-e állítva" />
                     </columns>
                 </TableView>
             </AnchorPane>
