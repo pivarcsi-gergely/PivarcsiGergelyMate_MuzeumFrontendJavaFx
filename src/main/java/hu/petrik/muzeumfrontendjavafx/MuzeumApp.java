@@ -13,7 +13,7 @@ public class MuzeumApp extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MuzeumApp.class.getResource("statue_main.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setResizable(false);
-        stage.setTitle("Hello!");
+        stage.setTitle("MúzeumAPI");
         stage.setScene(scene);
         stage.show();
     }

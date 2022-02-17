@@ -45,12 +45,29 @@ public class MuzeumController extends Controller {
 
     @FXML
     public void onEditSzoborClicked(ActionEvent actionEvent) {
+        int selectedIndex = szoborTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex == -1) {
+            alert("A módosításhoz előbb válasszon ki egy szobrot a táblázatból!");
+            return;
+        }
+        Szobor modositandoSzobor = szoborTable.getSelectionModel().getSelectedItem();
+        try {
+            SzoborEditController szoborModositas = (SzoborEditController) ujAblak("szobor-edit-view.fxml", "Szobor módosítása", 320, 400);
+            szoborModositas.setModositando(modositandoSzobor);
+            szoborModositas.getStage().setResizable(false);
+            szoborModositas.getStage().setOnHiding(event -> festmenyTable.refresh());
+            szoborModositas.getStage().setOnCloseRequest(event -> festmenyFeltolt());
+            szoborModositas.getStage().show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     public void onUjSzoborClicked(ActionEvent actionEvent) {
         try {
             Controller hozzaadas = ujAblak("hozzaad-szobor-view.fxml", "Szobor hozzáadása", 320, 400);
+            hozzaadas.getStage().setResizable(false);
             hozzaadas.getStage().setOnCloseRequest(event -> szoborFeltolt());
             hozzaadas.getStage().show();
         } catch (Exception e) {
@@ -60,16 +77,50 @@ public class MuzeumController extends Controller {
 
     @FXML
     public void onTorolSzoborClicked(ActionEvent actionEvent) {
+        int selectedIndex = szoborTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex == -1) {
+            alert("A törléshez előbb válasszon ki egy szobrot a táblázatból!");
+            return;
+        }
+        Szobor torlendoSzobor = szoborTable.getSelectionModel().getSelectedItem();
+        if (!confirm("Biztos, hogy törölni szeretné az alábbi számú szobrot: " + torlendoSzobor.getId() + "?")) {
+            return;
+        } else {
+            try {
+                boolean sikeres = MuzeumApi.szoborTorlese(torlendoSzobor.getId());
+                alert(sikeres ? "Sikeres törlés" : "Sikertelen törlés");
+                szoborFeltolt();
+            } catch (IOException e) {
+                hibaKiir(e);
+            }
+        }
     }
 
     @FXML
-    public void onFestmenyTorolClicked(ActionEvent actionEvent) {
+    public void onEditFestmenyClicked(ActionEvent actionEvent) {
+        int selectedIndex = festmenyTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex == -1) {
+            alert("A módosításhoz előbb válasszon ki egy festményt a táblázatból!");
+            return;
+        }
+        Festmeny modositandoFestmeny = festmenyTable.getSelectionModel().getSelectedItem();
+        try {
+            FestmenyEditController festmenyModositas = (FestmenyEditController) ujAblak("festmeny-edit-view.fxml", "Festmény módosítása", 320, 400);
+            festmenyModositas.setModositando(modositandoFestmeny);
+            festmenyModositas.getStage().setResizable(false);
+            festmenyModositas.getStage().setOnHiding(event -> festmenyTable.refresh());
+            festmenyModositas.getStage().setOnCloseRequest(event -> festmenyFeltolt());
+            festmenyModositas.getStage().show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     public void onUjFestmenyClicked(ActionEvent actionEvent) {
         try {
             Controller hozzaadas = ujAblak("hozzaad-festmeny-view.fxml", "Festmény hozzáadása", 320, 400);
+            hozzaadas.getStage().setResizable(false);
             hozzaadas.getStage().setOnCloseRequest(event -> festmenyFeltolt());
             hozzaadas.getStage().show();
         } catch (Exception e) {
@@ -78,10 +129,27 @@ public class MuzeumController extends Controller {
     }
 
     @FXML
-    public void onEditFestmenyClicked(ActionEvent actionEvent) {
+    public void onFestmenyTorolClicked(ActionEvent actionEvent) {
+        int selectedIndex = festmenyTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex == -1) {
+            alert("A törléshez előbb válasszon ki egy festményt a táblázatból!");
+            return;
+        }
+        Festmeny torlendoFestmeny = festmenyTable.getSelectionModel().getSelectedItem();
+        if (!confirm("Biztos, hogy törölni szeretné az alábbi című festményt: " + torlendoFestmeny.getTitle() + "?")) {
+            return;
+        } else {
+            try {
+                boolean sikeres = MuzeumApi.festmenyTorlese(torlendoFestmeny.getId());
+                alert(sikeres ? "Sikeres törlés" : "Sikertelen törlés");
+                festmenyFeltolt();
+            } catch (IOException e) {
+                hibaKiir(e);
+            }
+        }
     }
 
-    private void festmenyFeltolt() {
+    public void festmenyFeltolt() {
         try {
             List<Festmeny> festmenyLista = MuzeumApi.getFestmenyek();
             festmenyTable.getItems().clear();
